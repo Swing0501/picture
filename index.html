@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图片轮播-缩略图</title>
+<style>
+a,ul,span,img{margin:0;padding:0;}
+li{list-style:none;}
+img{display:block;}
+body{background:url(imgs/bg.jpg);background-size:cover;}
+.center{width:680px;height:460px;border:1px solid #999;position:relative;margin:50px auto;box-shadow:0 0 24px #fff;}
+.center img{width:680px;height:460px;}
+.center a{position:absolute;top:230px;text-decoration:none;font-size:40px;font-weight:bold;border-radius:50px;width:50px;height:50px;color:#fff;background-color:#F39;text-align:center;line-height:50px;}
+.center a:hover{background-color:#F03;}
+.center a.left{left: 30px;}
+.center a.right{right: 30px;}
+
+.center .list{width:126px;height:15px;margin:20px auto;}
+.center .list li{float:left;width:15px;height:15px;background:#fff;margin-right:10px;border-radius:50px;position:relative;}
+.center .list li.active{background:#ff00ff;}
+.center .list li span{width:120px;height:85px;position:absolute;left:-52px;top:-90px;background:url(imgs/active2.png) no-repeat;display:none;}
+.center .list li span img{width:110px;height:70px;padding:5px;}
+
+</style>
+
+</head>
+
+<body>
+	<div class="center">
+		<a class="left" href="javascript:void(0)"><</a>
+		<img src="imgs/1.jpg" />
+		<a class="right" href="javascript:void(0)">></a>
+		<div class="list">
+    		<ul id="ull">
+           <!-- <li><span><img src="imgs/1.jpg"></span></li>-->
+			</ul>
+    	</div>
+	</div>
+
+</body>
+
+<script>
+window.onload = function(){
+	var oDiv=document.getElementsByTagName('div')[0];
+	var aBtn=oDiv.getElementsByTagName('a');
+	var oImg=oDiv.getElementsByTagName('img');
+	var oUl=oDiv.getElementsByTagName('ul')[0];
+	var aLi=oUl.getElementsByTagName('li');
+	var oSpan=oUl.getElementsByTagName('span');
+	var arrImg = ["imgs/1.jpg","imgs/2.jpg","imgs/3.jpg","imgs/4.jpg","imgs/5.jpg"];
+	var num = 0;
+	
+	
+	for (var i=0;i<arrImg.length;i++){
+		oUl.innerHTML += '<li><span><img src="'+arrImg[i]+'"></span></li>';}
+	
+	//初始化
+	function fnTab(){
+		//aLi[num].className = 'active';
+		for (var i=0;i<arrImg.length;i++){
+			aLi[i].className = '';
+			}
+		aLi[num].className = 'active';
+		oImg[0].src = arrImg[num];
+		}
+		
+	fnTab();
+	
+	for( var i=0;i<aLi.length;i++){
+		aLi[i].index=i;
+		aLi[i].onmouseover=function(){
+			num=this.index;
+			oSpan[num].style.display='block';
+		}
+		aLi[i].onmouseout=function(){
+			oSpan[num].style.display='none';
+		}
+		aLi[i].onclick=function(){
+			oImg[0].src=arrImg[num];  
+			fnTab();
+		} 
+	}
+	
+	
+	aBtn[1].onclick=function (){
+		num++;
+		if(num == arrImg.length){
+			num=0;
+			
+		}
+		fnTab();
+	}
+	
+	aBtn[0].onclick=function (){
+		num--;
+		if(num == -1){
+			num=arrImg.length-1;
+			oSpan.innerHTML=arrImg[this.index];
+		}
+		fnTab();
+	}
+	
+
+	
+};
+
+
+</script>
+</html>
